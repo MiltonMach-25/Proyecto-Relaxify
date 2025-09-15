@@ -1,0 +1,10 @@
+exports.verEjercicios = async () => ({ message: 'Lista de ejercicios' });
+exports.nuevoEjercicio = async (data) => ({ message: 'Nuevo ejercicio creado', data });
+exports.editarEjercicio = async (id, data) => ({ message: 'Ejercicio editado', id, data });
+exports.eliminarEjercicio = async (id) => ({ message: 'Ejercicio eliminado', id });
+exports.musica = async () => ({ message: 'Música relajante' });
+exports.meditaciones = async () => ({ message: 'Meditaciones guiadas' });
+exports.respiracion = async () => ({ message: 'Ejercicios de respiración' });
+exports.reto30Dias = async () => ({ message: 'Reto de 30 días' });
+exports.historialSesiones = async () => ({ message: 'Historial de sesiones' });
+exports.crearSesion = async (data) => ({ message: 'Sesión creada', data });

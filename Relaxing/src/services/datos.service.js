@@ -1,0 +1,10 @@
+exports.listarDatos = async () => ({ message: 'Todos los registros biométricos' });
+exports.subirDatos = async (data) => ({ message: 'Datos subidos', data });
+exports.editarDato = async (id, data) => ({ message: 'Dato editado', id, data });
+exports.eliminarDato = async (id) => ({ message: 'Dato eliminado', id });
+exports.analisisIA = async () => ({ message: 'Análisis IA' });
+exports.historialRitmo = async () => ({ message: 'Historial de ritmo cardíaco' });
+exports.compararRegistros = async () => ({ message: 'Comparación de registros' });
+exports.tendencias = async () => ({ message: 'Tendencias de salud' });
+exports.recomendaciones = async () => ({ message: 'Recomendaciones personalizadas' });
+exports.exportar = async () => ({ message: 'Datos exportados' });
