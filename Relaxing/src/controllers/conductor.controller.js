@@ -1,26 +1,61 @@
 const conductorService = require('../services/conductor.service');
 
-exports.estado = async (req, res) => {
-    try { res.status(200).json(await conductorService.estado()); }
-    catch (error) { res.status(500).json({ message: 'Error estado', error }); }
+// Ver estado actual del conductor
+exports.verEstado = async (req, res) => {
+    try {
+        const estado = await conductorService.getEstado(req.params.id);
+        res.status(200).json(estado);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener estado del conductor", error });
+    }
 };
-exports.historial = async (req, res) => {
-    try { res.status(200).json(await conductorService.historial()); }
-    catch (error) { res.status(500).json({ message: 'Error historial', error }); }
+
+// Consultar historial de alertas
+exports.verHistorial = async (req, res) => {
+    try {
+        const historial = await conductorService.getHistorial(req.params.id);
+        res.status(200).json(historial);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener historial de alertas", error });
+    }
 };
-exports.configuracion = async (req, res) => {
-    try { res.status(200).json(await conductorService.configuracion(req.body)); }
-    catch (error) { res.status(500).json({ message: 'Error configuracion', error }); }
+
+// Ajustar configuración de conducción
+exports.actualizarConfiguracion = async (req, res) => {
+    try {
+        const actualizado = await conductorService.actualizarConfiguracion(req.params.id, req.body);
+        res.status(200).json(actualizado);
+    } catch (error) {
+        res.status(500).json({ message: "Error al actualizar configuración", error });
+    }
 };
-exports.activar = async (req, res) => {
-    try { res.status(201).json(await conductorService.activar()); }
-    catch (error) { res.status(500).json({ message: 'Error activar', error }); }
+
+// Activar modo conducción segura
+exports.activarModo = async (req, res) => {
+    try {
+        const activado = await conductorService.activarModo(req.params.id);
+        res.status(200).json(activado);
+    } catch (error) {
+        res.status(500).json({ message: "Error al activar modo seguro", error });
+    }
 };
-exports.descanso = async (req, res) => {
-    try { res.status(200).json(await conductorService.descanso()); }
-    catch (error) { res.status(500).json({ message: 'Error descanso', error }); }
+
+// Recomendaciones de descanso
+exports.verDescanso = async (req, res) => {
+    try {
+        const descanso = await conductorService.getDescanso(req.params.id);
+        res.status(200).json(descanso);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener recomendaciones de descanso", error });
+    }
 };
-exports.rutaSegura = async (req, res) => {
-    try { res.status(200).json(await conductorService.rutaSegura()); }
-    catch (error) { res.status(500).json({ message: 'Error rutaSegura', error }); }
+
+// Mostrar rutas seguras
+exports.verRutaSegura = async (req, res) => {
+    try {
+        const rutas = await conductorService.getRutaSegura();
+        res.status(200).json(rutas);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener rutas seguras", error });
+    }
 };

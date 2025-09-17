@@ -1,30 +1,81 @@
 const marketplaceService = require('../services/marketplace.service');
 
-exports.listar = async (req, res) => {
-    try { res.status(200).json(await marketplaceService.listar()); }
-    catch (error) { res.status(500).json({ message: 'Error listar', error }); }
+// Listar productos
+exports.findAll = async (req, res) => {
+    try {
+        const productos = await marketplaceService.findAll();
+        res.status(200).json(productos);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener productos', error });
+    }
 };
-exports.nuevo = async (req, res) => {
-    try { res.status(201).json(await marketplaceService.nuevo(req.body)); }
-    catch (error) { res.status(500).json({ message: 'Error nuevo', error }); }
+
+// Buscar producto por ID
+exports.findById = async (req, res) => {
+    try {
+        const producto = await marketplaceService.findById(req.params.id);
+        res.status(200).json(producto);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al buscar producto', error });
+    }
 };
-exports.editar = async (req, res) => {
-    try { res.status(200).json(await marketplaceService.editar(req.params.id, req.body)); }
-    catch (error) { res.status(500).json({ message: 'Error editar', error }); }
+
+// Publicar producto
+exports.create = async (req, res) => {
+    try {
+        const producto = await marketplaceService.create(req.body);
+        res.status(201).json(producto);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al crear producto', error });
+    }
 };
-exports.eliminar = async (req, res) => {
-    try { res.status(200).json(await marketplaceService.eliminar(req.params.id)); }
-    catch (error) { res.status(500).json({ message: 'Error eliminar', error }); }
+
+// Editar producto
+exports.update = async (req, res) => {
+    try {
+        const resultado = await marketplaceService.update(req.params.id, req.body);
+        res.status(200).json(resultado);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al actualizar producto', error });
+    }
 };
+
+// Eliminar producto
+exports.remove = async (req, res) => {
+    try {
+        const resultado = await marketplaceService.remove(req.params.id);
+        res.status(200).json(resultado);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al eliminar producto', error });
+    }
+};
+
+// Ver carrito de compras
 exports.carrito = async (req, res) => {
-    try { res.status(200).json(await marketplaceService.carrito()); }
-    catch (error) { res.status(500).json({ message: 'Error carrito', error }); }
+    try {
+        const carrito = await marketplaceService.carrito(req.body.userId);
+        res.status(200).json(carrito);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener carrito', error });
+    }
 };
+
+// Procesar pago
 exports.pago = async (req, res) => {
-    try { res.status(200).json(await marketplaceService.pago(req.body)); }
-    catch (error) { res.status(500).json({ message: 'Error pago', error }); }
+    try {
+        const resultado = await marketplaceService.pago(req.body.userId, req.body.total);
+        res.status(201).json(resultado);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al procesar pago', error });
+    }
 };
+
+// Historial de compras
 exports.historial = async (req, res) => {
-    try { res.status(200).json(await marketplaceService.historial()); }
-    catch (error) { res.status(500).json({ message: 'Error historial', error }); }
+    try {
+        const compras = await marketplaceService.historial(req.params.userId);
+        res.status(200).json(compras);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener historial', error });
+    }
 };

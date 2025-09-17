@@ -1,26 +1,61 @@
 const extrasService = require('../services/extras.service');
 
-exports.configuracion = async (req, res) => {
-    try { res.status(200).json(await extrasService.configuracion()); }
-    catch (error) { res.status(500).json({ message: 'Error configuracion', error }); }
+// Acceder a configuraciones avanzadas
+exports.getConfiguracion = async (req, res) => {
+    try {
+        const configuracion = await extrasService.getConfiguracion();
+        res.status(200).json(configuracion);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener configuraciones', error });
+    }
 };
-exports.ayuda = async (req, res) => {
-    try { res.status(200).json(await extrasService.ayuda()); }
-    catch (error) { res.status(500).json({ message: 'Error ayuda', error }); }
+
+// Centro de ayuda y soporte
+exports.getAyuda = async (req, res) => {
+    try {
+        const ayuda = await extrasService.getAyuda();
+        res.status(200).json(ayuda);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener ayuda', error });
+    }
 };
-exports.contacto = async (req, res) => {
-    try { res.status(200).json(await extrasService.contacto(req.body)); }
-    catch (error) { res.status(500).json({ message: 'Error contacto', error }); }
+
+// Enviar consulta a soporte
+exports.enviarConsulta = async (req, res) => {
+    try {
+        const resultado = await extrasService.enviarConsulta(req.body);
+        res.status(201).json(resultado);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al enviar consulta', error });
+    }
 };
-exports.politicas = async (req, res) => {
-    try { res.status(200).json(await extrasService.politicas()); }
-    catch (error) { res.status(500).json({ message: 'Error politicas', error }); }
+
+// Ver políticas de privacidad
+exports.getPoliticas = async (req, res) => {
+    try {
+        const politicas = await extrasService.getPoliticas();
+        res.status(200).json(politicas);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener políticas', error });
+    }
 };
-exports.terminos = async (req, res) => {
-    try { res.status(200).json(await extrasService.terminos()); }
-    catch (error) { res.status(500).json({ message: 'Error terminos', error }); }
+
+// Ver términos y condiciones
+exports.getTerminos = async (req, res) => {
+    try {
+        const terminos = await extrasService.getTerminos();
+        res.status(200).json(terminos);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener términos', error });
+    }
 };
-exports.actualizaciones = async (req, res) => {
-    try { res.status(200).json(await extrasService.actualizaciones()); }
-    catch (error) { res.status(500).json({ message: 'Error actualizaciones', error }); }
+
+// Ver actualizaciones recientes
+exports.getActualizaciones = async (req, res) => {
+    try {
+        const actualizaciones = await extrasService.getActualizaciones();
+        res.status(200).json(actualizaciones);
+    } catch (error) {
+        res.status(500).json({ message: 'Error al obtener actualizaciones', error });
+    }
 };

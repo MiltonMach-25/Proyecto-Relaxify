@@ -1,22 +1,51 @@
 const reportesService = require('../services/reportes.service');
 
-exports.nuevoReporte = async (req, res) => {
-    try { res.status(201).json(await reportesService.nuevoReporte(req.body)); }
-    catch (error) { res.status(500).json({ message: 'Error nuevoReporte', error }); }
+// Generar un nuevo reporte
+exports.nuevo = async (req, res) => {
+    try {
+        const reporte = await reportesService.nuevo(req.body);
+        res.status(201).json(reporte);
+    } catch (error) {
+        res.status(500).json({ message: "Error al crear reporte", error });
+    }
 };
-exports.editarReporte = async (req, res) => {
-    try { res.status(200).json(await reportesService.editarReporte(req.params.id, req.body)); }
-    catch (error) { res.status(500).json({ message: 'Error editarReporte', error }); }
+
+// Editar un reporte
+exports.editar = async (req, res) => {
+    try {
+        const result = await reportesService.editar(req.params.id, req.body);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error al editar reporte", error });
+    }
 };
-exports.eliminarReporte = async (req, res) => {
-    try { res.status(200).json(await reportesService.eliminarReporte(req.params.id)); }
-    catch (error) { res.status(500).json({ message: 'Error eliminarReporte', error }); }
+
+// Eliminar un reporte
+exports.eliminar = async (req, res) => {
+    try {
+        const result = await reportesService.eliminar(req.params.id);
+        res.status(200).json(result);
+    } catch (error) {
+        res.status(500).json({ message: "Error al eliminar reporte", error });
+    }
 };
-exports.detallesReporte = async (req, res) => {
-    try { res.status(200).json(await reportesService.detallesReporte(req.params.id)); }
-    catch (error) { res.status(500).json({ message: 'Error detallesReporte', error }); }
+
+// Ver detalles de un reporte
+exports.detalles = async (req, res) => {
+    try {
+        const detalle = await reportesService.detalles(req.params.id);
+        res.status(200).json(detalle);
+    } catch (error) {
+        res.status(500).json({ message: "Error al consultar reporte", error });
+    }
 };
-exports.descargarReporte = async (req, res) => {
-    try { res.status(200).json(await reportesService.descargarReporte(req.params.id)); }
-    catch (error) { res.status(500).json({ message: 'Error descargarReporte', error }); } 
+
+// Descargar reporte
+exports.descargar = async (req, res) => {
+    try {
+        const reporte = await reportesService.descargar(req.params.id);
+        res.status(200).json(reporte);
+    } catch (error) {
+        res.status(500).json({ message: "Error al descargar reporte", error });
+    }
 };

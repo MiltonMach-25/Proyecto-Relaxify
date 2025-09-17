@@ -1,81 +1,86 @@
-const userService = require('../services/user.service');
+const usersService = require('../services/users.service');
 
-// Login
-exports.login = async (req, res) => {
+// Listar todos los usuarios
+exports.listarUsuarios = async (req, res) => {
     try {
-        const user = await userService.login(req.body);
+        const users = await usersService.findAll();
+        res.status(200).json(users);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener usuarios", error });
+    }
+};
+
+// Consultar perfil de usuario
+exports.perfilUsuario = async (req, res) => {
+    try {
+        const user = await usersService.findById(req.params.id);
+        if (!user) return res.status(404).json({ message: "Usuario no encontrado" });
         res.status(200).json(user);
     } catch (error) {
-        res.status(500).json({ message: "Error en login", error });
+        res.status(500).json({ message: "Error al consultar perfil", error });
     }
 };
 
-// Registro
-exports.register = async (req, res) => {
+// Actualizar usuario
+exports.actualizarUsuario = async (req, res) => {
     try {
-        const newUser = await userService.register(req.body);
-        res.status(201).json(newUser);
+        const actualizado = await usersService.update(req.params.id, req.body);
+        if (!actualizado) return res.status(404).json({ message: "Usuario no encontrado" });
+        res.status(200).json({ message: "Usuario actualizado correctamente" });
     } catch (error) {
-        res.status(500).json({ message: "Error en registro", error });
+        res.status(500).json({ message: "Error al actualizar usuario", error });
     }
 };
 
-// Logout
-exports.logout = async (req, res) => {
+// Eliminar usuario
+exports.eliminarUsuario = async (req, res) => {
     try {
-        const result = await userService.logout(req.params.id);
-        res.status(200).json(result);
+        const eliminado = await usersService.remove(req.params.id);
+        if (!eliminado) return res.status(404).json({ message: "Usuario no encontrado" });
+        res.status(200).json({ message: "Usuario eliminado correctamente" });
     } catch (error) {
-        res.status(500).json({ message: "Error en logout", error });
+        res.status(500).json({ message: "Error al eliminar usuario", error });
     }
 };
 
-// Recuperar contraseña
-exports.recuperar = async (req, res) => {
+// Ver preferencias de usuario
+exports.verPreferencias = async (req, res) => {
     try {
-        const result = await userService.recuperar(req.body.correo);
-        res.status(200).json(result);
+        const prefs = await usersService.getPreferencias(req.params.id);
+        res.status(200).json(prefs);
     } catch (error) {
-        res.status(500).json({ message: "Error al recuperar contraseña", error });
+        res.status(500).json({ message: "Error al obtener preferencias", error });
     }
 };
 
-// Verificar cuenta
-exports.verificar = async (req, res) => {
+// Configurar notificaciones
+exports.configurarNotificaciones = async (req, res) => {
     try {
-        const result = await userService.verificar(req.params.token);
-        res.status(200).json(result);
+        const actualizado = await usersService.setNotificaciones(req.params.id, req.body.notificaciones);
+        if (!actualizado) return res.status(404).json({ message: "Usuario no encontrado" });
+        res.status(200).json({ message: "Notificaciones actualizadas" });
     } catch (error) {
-        res.status(500).json({ message: "Error en verificación", error });
+        res.status(500).json({ message: "Error al actualizar notificaciones", error });
     }
 };
 
-// Generar token
-exports.token = async (req, res) => {
+// Ver conexiones
+exports.verConexiones = async (req, res) => {
     try {
-        const result = await userService.token(req.params.id);
-        res.status(200).json(result);
+        const conexiones = await usersService.getConexiones(req.params.id);
+        res.status(200).json(conexiones);
     } catch (error) {
-        res.status(500).json({ message: "Error al generar token", error });
+        res.status(500).json({ message: "Error al obtener conexiones", error });
     }
 };
 
-// Dispositivos vinculados
-exports.dispositivos = async (req, res) => {
+// Actualizar estado visible
+exports.actualizarEstado = async (req, res) => {
     try {
-        const result = await userService.dispositivos(req.params.id);
-        res.status(200).json(result);
+        const actualizado = await usersService.setEstado(req.params.id, req.body.estado);
+        if (!actualizado) return res.status(404).json({ message: "Usuario no encontrado" });
+        res.status(200).json({ message: "Estado actualizado correctamente" });
     } catch (error) {
-        res.status(500).json({ message: "Error al obtener dispositivos", error });
-    }
-};
-
-// Desvincular dispositivo
-exports.desvincular = async (req, res) => {
-    try {
-        const result = await userService.desvincular(req.params.id);
-        res.status(200).json(result);
-    } catch (error) {
-        res.status(500).json({ message: "Error al desvincular dispositivo", error });
+        res.status(500).json({ message: "Error al actualizar estado", error });
     }
 };

@@ -1,34 +1,92 @@
 const authService = require('../services/auth.service');
 
 exports.login = async (req, res) => {
-    try { res.status(200).json(await authService.login(req.body)); } 
-    catch (error) { res.status(500).json({ message: 'Error login', error }); }
+    try {
+        const { correo, password } = req.body;
+        const user = await authService.login(correo, password);
+        if (!user) {
+            return res.status(401).json({ message: "Credenciales inválidas" });
+        }
+        res.status(200).json({ message: "Inicio de sesión exitoso", user });
+    } catch (error) {
+        res.status(500).json({ message: "Error en login", error });
+    }
 };
+
 exports.register = async (req, res) => {
-    try { res.status(201).json(await authService.register(req.body)); } 
-    catch (error) { res.status(500).json({ message: 'Error register', error }); }
+    try {
+        const newUser = await authService.register(req.body);
+        res.status(201).json(newUser);
+    } catch (error) {
+        res.status(500).json({ message: "Error al registrar usuario", error });
+    }
 };
+
 exports.logout = async (req, res) => {
-    try { res.status(200).json(await authService.logout(req.params.id)); } 
-    catch (error) { res.status(500).json({ message: 'Error logout', error }); }
+    try {
+        const updated = await authService.logout(req.body.userId);
+        if (!updated) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+        res.status(200).json({ message: "Sesión cerrada correctamente" });
+    } catch (error) {
+        res.status(500).json({ message: "Error al cerrar sesión", error });
+    }
 };
+
 exports.recuperar = async (req, res) => {
-    try { res.status(200).json(await authService.recuperar(req.body.correo)); } 
-    catch (error) { res.status(500).json({ message: 'Error recuperar', error }); }
+    try {
+        const user = await authService.recuperar(req.body.correo);
+        if (!user) {
+            return res.status(404).json({ message: "Correo no registrado" });
+        }
+        res.status(200).json({ message: "Correo válido para recuperación", user });
+    } catch (error) {
+        res.status(500).json({ message: "Error al recuperar cuenta", error });
+    }
 };
+
 exports.verificar = async (req, res) => {
-    try { res.status(200).json(await authService.verificar(req.params.token)); } 
-    catch (error) { res.status(500).json({ message: 'Error verificar', error }); }
+    try {
+        const user = await authService.verificar(req.query.userId);
+        if (!user) {
+            return res.status(404).json({ message: "Usuario no encontrado" });
+        }
+        res.status(200).json(user);
+    } catch (error) {
+        res.status(500).json({ message: "Error al verificar cuenta", error });
+    }
 };
+
 exports.token = async (req, res) => {
-    try { res.status(200).json(await authService.token(req.params.id)); } 
-    catch (error) { res.status(500).json({ message: 'Error token', error }); }
+    try {
+        const token = await authService.token(req.query.userId);
+        if (!token) {
+            return res.status(404).json({ message: "Token no encontrado" });
+        }
+        res.status(200).json(token);
+    } catch (error) {
+        res.status(500).json({ message: "Error al generar token", error });
+    }
 };
+
 exports.dispositivos = async (req, res) => {
-    try { res.status(200).json(await authService.dispositivos(req.params.id)); } 
-    catch (error) { res.status(500).json({ message: 'Error dispositivos', error }); }
+    try {
+        const dispositivos = await authService.dispositivos(req.query.userId);
+        res.status(200).json(dispositivos);
+    } catch (error) {
+        res.status(500).json({ message: "Error al obtener dispositivos", error });
+    }
 };
+
 exports.desvincular = async (req, res) => {
-    try { res.status(200).json(await authService.desvincular(req.params.id)); } 
-    catch (error) { res.status(500).json({ message: 'Error desvincular', error }); }
+    try {
+        const removed = await authService.desvincular(req.body.dispositivoId);
+        if (!removed) {
+            return res.status(404).json({ message: "Dispositivo no encontrado" });
+        }
+        res.status(200).json({ message: "Dispositivo desvinculado correctamente" });
+    } catch (error) {
+        res.status(500).json({ message: "Error al desvincular dispositivo", error });
+    }
 };
