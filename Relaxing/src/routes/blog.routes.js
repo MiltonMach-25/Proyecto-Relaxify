@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 const blogController = require('../controllers/blog.controller');
 
-router.get('/', blogController.listar);
-router.post('/nuevo', blogController.nuevo);
-router.put('/:id/editar', blogController.editar);
-router.delete('/:id/eliminar', blogController.eliminar);
-router.get('/categorias', blogController.categorias);
-router.get('/comentarios', blogController.comentarios);
+router.get('/', blogController.verArticulos);
+router.post('/nuevo', blogController.crearArticulo);
+router.put('/:id/editar', blogController.editarArticulo);
+router.delete('/:id/eliminar', blogController.eliminarArticulo);
+router.get('/categorias', blogController.verCategorias);
+router.get('/comentarios', blogController.verComentarios);
 
 module.exports = router;

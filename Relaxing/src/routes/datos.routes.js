@@ -6,11 +6,11 @@ router.get('/', datosController.listarDatos);
 router.post('/subir', datosController.subirDatos);
 router.put('/:id/editar', datosController.editarDato);
 router.delete('/:id/eliminar', datosController.eliminarDato);
-router.get('/analisis', datosController.analisisIA);
-router.get('/ritmo', datosController.historialRitmo);
-router.get('/comparar', datosController.compararRegistros);
-router.get('/tendencias', datosController.tendencias);
-router.get('/recomendaciones', datosController.recomendaciones);
-router.get('/exportar', datosController.exportar);
+router.get('/analisis/:id', datosController.verAnalisis);
+router.get('/ritmo/:id', datosController.verRitmo);
+router.get('/comparar/:id', datosController.compararDatos);
+router.get('/tendencias/:id', datosController.verTendencias);
+router.get('/recomendaciones/:id', datosController.verRecomendaciones);
+router.get('/exportar/:id', datosController.exportarDatos);
 
 module.exports = router;

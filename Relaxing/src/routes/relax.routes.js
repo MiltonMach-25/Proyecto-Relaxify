@@ -6,11 +6,11 @@ router.get('/ejercicios', relaxController.verEjercicios);
 router.post('/ejercicios/nuevo', relaxController.nuevoEjercicio);
 router.put('/ejercicios/:id/editar', relaxController.editarEjercicio);
 router.delete('/ejercicios/:id/eliminar', relaxController.eliminarEjercicio);
-router.get('/musica', relaxController.musica);
-router.get('/meditaciones', relaxController.meditaciones);
-router.get('/respiracion', relaxController.respiracion);
-router.get('/reto-30dias', relaxController.reto30Dias);
-router.get('/sesiones', relaxController.historialSesiones);
+router.get('/musica', relaxController.verMusica);
+router.get('/meditaciones', relaxController.verMeditaciones);
+router.get('/respiracion', relaxController.verRespiracion);
+router.get('/reto-30dias', relaxController.verReto30Dias);
+router.get('/sesiones/:id', relaxController.verSesiones);
 router.post('/sesiones/crear', relaxController.crearSesion);
 
 module.exports = router;

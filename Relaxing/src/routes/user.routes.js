@@ -1,18 +1,15 @@
 
 const express = require('express');
 const router = express.Router();
-const userController = require('../controllers/user.controller');
+const usersController = require('../controllers/users.controller');
 
-// Rutas de autenticación y usuario
-router.post('/login', userController.login);
-router.post('/register', userController.register);
-router.post('/logout/:id', userController.logout);
-router.post('/recuperar', userController.recuperar);
-router.get('/verificar/:token', userController.verificar);
-router.get('/token/:id', userController.token);
-
-// Rutas de dispositivos
-router.get('/dispositivos/:id', userController.dispositivos);
-router.delete('/desvincular/:id', userController.desvincular);
+router.get('/', usersController.listarUsuarios);
+router.get('/:id', usersController.perfilUsuario);
+router.put('/:id/update', usersController.actualizarUsuario);
+router.delete('/:id/remove', usersController.eliminarUsuario);
+router.get('/:id/preferencias', usersController.verPreferencias);
+router.put('/:id/notificaciones', usersController.configurarNotificaciones);
+router.get('/:id/conexiones', usersController.verConexiones);
+router.put('/:id/estado', usersController.actualizarEstado);
 
 module.exports = router;

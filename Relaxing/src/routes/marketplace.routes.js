@@ -2,12 +2,14 @@ const express = require('express');
 const router = express.Router();
 const marketplaceController = require('../controllers/marketplace.controller');
 
-router.get('/', marketplaceController.listar);
-router.post('/nuevo', marketplaceController.nuevo);
-router.put('/:id/editar', marketplaceController.editar);
-router.delete('/:id/eliminar', marketplaceController.eliminar);
+router.get('/', marketplaceController.findAll);
+router.get('/:id', marketplaceController.findById);
+router.post('/nuevo', marketplaceController.create);
+router.put('/:id/editar', marketplaceController.update);
+router.delete('/:id/eliminar', marketplaceController.remove);
+
 router.get('/carrito', marketplaceController.carrito);
 router.post('/pago', marketplaceController.pago);
-router.get('/historial', marketplaceController.historial);
+router.get('/historial/:userId', marketplaceController.historial);
 
 module.exports = router;
